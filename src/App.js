@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useState } from 'react';
+import Destino from './components/Destino';
+import CantidadPersonas from './components/CantidadPersonas';
+import CostoTotal from './components/CostoTotal';
 
 function App() {
+  const [destino, setDestino] = useState('Ciudad de Panamá');
+  const [cantidadPersonas, setCantidadPersonas] = useState(1);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Calculadora de Costo de Viaje</h1>
+      <Destino destino={destino} onChangeDestino={setDestino} />
+      <CantidadPersonas cantidadPersonas={cantidadPersonas} onChangeCantidadPersonas={setCantidadPersonas} />
+      <CostoTotal destino={destino} cantidadPersonas={cantidadPersonas} />
     </div>
   );
 }
