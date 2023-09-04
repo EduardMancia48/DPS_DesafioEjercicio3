@@ -11,6 +11,7 @@ function CantidadPersonas({ cantidadPersonas, onChangeCantidadPersonas }) {
         id="cantidadPersonas"
         value={cantidadPersonas}
         onChange={(e) => onChangeCantidadPersonas(parseInt(e.target.value))}
+        min={1}
       />
     </div>
   );
