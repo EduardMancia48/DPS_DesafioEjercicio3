@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function CostoTotal({ destino, cantidadPersonas }) {
   const [costoTotal, setCostoTotal] = useState(0);
+  const [impuesto, setImpuesto] = useState(0);
 
   useEffect(() => {
     // Define los precios por destino y cantidad de personas
@@ -15,36 +16,35 @@ function CostoTotal({ destino, cantidadPersonas }) {
       'Roatán Honduras': [565, 499, 469, 449],
     };
 
+    // Calcula el impuesto
+    const tasaImpuesto = {
+      'Ciudad de Panamá': 4.5,
+      'Cancún México': 6,
+      'Santiago de Chile': 7,
+      'Machu Picchu Perú': 7.5,
+      'Roatán Honduras': 4,
+    }[destino];
+    const impuestoCalculado = parseFloat(precios[destino][0]) * cantidadPersonas * tasaImpuesto / 100;
+    setImpuesto(impuestoCalculado);
+
     // Calcula el costo total
-    const calcularCostoTotal = () => {
-      const precioIndex =
-        cantidadPersonas >= 5
-          ? 3
-          : cantidadPersonas >= 3
-          ? 2
-          : cantidadPersonas >= 2
-          ? 1
-          : 0;
-      const precio = precios[destino][precioIndex];
-      const impuestoCalculado = precio * cantidadPersonas * tasasImpuesto[destino];
-      return precio * cantidadPersonas
-    };  
-    // Define las tasas de impuesto por destino
-    const tasasImpuesto = {
-        'Ciudad de Panamá': 0.045,
-        'Cancún México': 0.06,
-        'Santiago de Chile': 0.07,
-        'Machu Picchu Perú': 0.075,
-        'Roatán Honduras': 0.04,
-      };
-    const nuevoCostoTotal = calcularCostoTotal();
-    setCostoTotal(nuevoCostoTotal);
+    const precioIndex =
+      cantidadPersonas >= 5
+        ? 3
+        : cantidadPersonas >= 3
+        ? 2
+        : cantidadPersonas >= 2
+        ? 1
+        : 0;
+    const precio = precios[destino][precioIndex];
+    const costoTotalCalculado = precio * cantidadPersonas;
+    setCostoTotal(costoTotalCalculado);
   }, [destino, cantidadPersonas]);
 
   return (
     <div className="form-group">
       <h2>Costo Total:</h2>
-      <p className="lead">${costoTotal.toFixed(2)}</p>
+      <p className="lead">${(costoTotal + impuesto).toFixed(2)}</p>
     </div>
   );
 }
