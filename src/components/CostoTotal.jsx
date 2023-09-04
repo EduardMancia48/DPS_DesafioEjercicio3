@@ -24,10 +24,7 @@ function CostoTotal({ destino, cantidadPersonas }) {
       'Machu Picchu Perú': 7.5,
       'Roatán Honduras': 4,
     }[destino];
-    const impuestoCalculado = parseFloat(precios[destino][0]) * cantidadPersonas * tasaImpuesto / 100;
-    setImpuesto(impuestoCalculado);
-
-    // Calcula el costo total
+    
     const precioIndex =
       cantidadPersonas >= 5
         ? 3
@@ -36,7 +33,13 @@ function CostoTotal({ destino, cantidadPersonas }) {
         : cantidadPersonas >= 2
         ? 1
         : 0;
+
     const precio = precios[destino][precioIndex];
+
+    const impuestoCalculado = precio * cantidadPersonas * tasaImpuesto / 100;
+    setImpuesto(impuestoCalculado);
+
+    // Calcula el costo total
     const costoTotalCalculado = precio * cantidadPersonas;
     setCostoTotal(costoTotalCalculado);
   }, [destino, cantidadPersonas]);
